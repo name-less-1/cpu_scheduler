@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CPU Scheduler — Energy-Aware Simulation</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Oxanium:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="tooltip" id="tooltip"></div>
+
+<div class="container">
+  <header>
+    <div class="header-inner">
+      <div class="logo-block">
+        <div class="logo-tag">// simulation_v1.0</div>
+        <h1>CPU <span>Scheduling</span> Simulator</h1>
+        <div class="subtitle">Energy-Aware Algorithm for Mobile &amp; Embedded Systems &nbsp;·&nbsp; DVFS Simulation</div>
+      </div>
+      <div class="badge">MOBILE / EMBEDDED</div>
+    </div>
+  </header>
+
+  <!-- Controls -->
+  <div class="controls-panel">
+    <div class="control-group">
+      <label>Task Count</label>
+      <div class="range-row">
+        <input type="range" id="taskCount" min="5" max="20" value="12" oninput="document.getElementById('tcVal').textContent=this.value"/>
+        <span class="range-val" id="tcVal">12</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label>RR Quantum</label>
+      <div class="range-row">
+        <input type="range" id="quantum" min="1" max="8" value="3" oninput="document.getElementById('qVal').textContent=this.value"/>
+        <span class="range-val" id="qVal">3</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label>Random Seed</label>
+      <input type="number" id="seed" value="42" min="1" max="9999"/>
+    </div>
+    <button class="run-btn" onclick="runAll()">▶ RUN SIMULATION</button>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="section-title">Algorithm Comparison</div>
+  <div class="stats-strip">
+    <div class="algo-card rr"><div class="algo-name">Round Robin</div><div id="rrStats"></div></div>
+    <div class="algo-card edf"><div class="algo-name">EDF — Earliest Deadline First</div><div id="edfStats"></div></div>
+    <div class="algo-card ea"><div class="algo-name">Energy-Aware EDF + DVFS</div><div id="eaStats"></div><div class="energy-save" id="energySave"></div></div>
+  </div>
+
+  <!-- Gantt Charts -->
+  <div class="gantt-section">
+    <div class="section-title">Gantt Charts</div>
+    <div class="gantt-wrap rr">
+      <div class="gantt-label">Round Robin</div>
+      <div class="gantt-track" id="ganttRR"></div>
+      <div class="gantt-axis" id="axisRR"></div>
+    </div>
+    <div class="gantt-wrap edf">
+      <div class="gantt-label">EDF</div>
+      <div class="gantt-track" id="ganttEDF"></div>
+      <div class="gantt-axis" id="axisEDF"></div>
+    </div>
+    <div class="gantt-wrap ea">
+      <div class="gantt-label">Energy-Aware EDF + DVFS</div>
+      <div class="gantt-track" id="ganttEA"></div>
+      <div class="gantt-axis" id="axisEA"></div>
+    </div>
+    <div class="freq-legend">
+      <span class="freq-dot"><span style="background:#00ff9d"></span>Ultra-Low freq</span>
+      <span class="freq-dot"><span style="background:#00d4aa"></span>Low freq</span>
+      <span class="freq-dot"><span style="background:#f39c12"></span>Medium freq</span>
+      <span class="freq-dot"><span style="background:#e67e22"></span>High freq</span>
+      <span class="freq-dot"><span style="background:#ff6b6b"></span>Max freq</span>
+    </div>
+  </div>
+
+  <!-- Charts Grid -->
+  <div class="section-title">Performance Metrics</div>
+  <div class="charts-grid">
+    <div class="chart-card">
+      <div class="chart-card-title">Total Energy Consumed</div>
+      <div class="chart-wrap"><canvas id="chartEnergy"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">Deadline Misses</div>
+      <div class="chart-wrap"><canvas id="chartMisses"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">Avg Turnaround Time</div>
+      <div class="chart-wrap"><canvas id="chartTurnaround"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">CPU Frequency Distribution (EA-EDF)</div>
+      <div class="chart-wrap"><canvas id="chartFreq"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Task Table -->
+  <div class="table-section">
+    <div class="section-title">Task Set</div>
+    <div class="table-wrapper">
+      <table class="task-table">
+        <thead>
+          <tr>
+            <th>ID</th><th>Arrival</th><th>Burst</th><th>Deadline</th><th>Priority</th>
+            <th>RR Finish</th><th>EDF Finish</th><th>EA Finish</th>
+            <th>RR Energy</th><th>EA Energy</th>
+          </tr>
+        </thead>
+        <tbody id="taskTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>CPU SCHEDULING SIMULATION &nbsp;·&nbsp; ENERGY-AWARE DVFS ALGORITHM &nbsp;·&nbsp; MOBILE &amp; EMBEDDED SYSTEMS</footer>
+</div>
+
+<script src="simulation.js"></script>
+<script src="charts.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
