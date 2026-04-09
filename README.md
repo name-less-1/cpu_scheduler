@@ -43,25 +43,34 @@ The web UI includes:
 
 ## Run locally
 
-Because this is a static frontend project, you can run it in either of these ways:
+Because this is a static frontend project, you do **not** need Python or a backend runtime.
 
 ### Option 1: Open directly
 
 Open `index.html` in your browser.
 
-### Option 2 (recommended): serve locally
+### Option 2: Serve with any static server (optional)
 
-Use any static server for consistent behavior, for example:
+If your browser blocks some local-file behaviors, run any lightweight static server.
+Use whichever tool you already have installed:
+
+```bash
+npx serve .
+```
+
+or
+
+```bash
+npx http-server .
+```
+
+or (only if Python is already installed)
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Then open:
-
-```text
-http://localhost:8000
-```
+Then open the local URL shown in your terminal (commonly `http://localhost:8000`).
 
 ## Notes
 
