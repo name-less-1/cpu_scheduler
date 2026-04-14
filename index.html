@@ -85,7 +85,15 @@
   <div class="section-title">Performance Metrics</div>
   <div class="charts-grid">
     <div class="chart-card">
-      <div class="chart-card-title">Total Energy Consumed</div>
+      <div class="chart-card-title"><span class="tooltip-wrap">
+  Total Energy Consumed
+  <span class="tooltip-icon" tabindex="0">?</span>
+  <span class="tooltip-box">
+    Sum of (CPU frequency² × execution time) for all tasks. Lower is better. 
+    The EA-EDF algorithm saves energy by running the CPU at lower frequencies 
+    when tasks have time to spare.
+  </span>
+</span></div>
       <div class="chart-wrap"><canvas id="chartEnergy"></canvas></div>
     </div>
     <div class="chart-card">
