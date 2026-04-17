@@ -33,14 +33,28 @@
       </div>
     </div>
     <div class="control-group">
-      <label>RR Quantum</label>
+      <label><span class="tooltip-wrap">
+  RR Quantum
+  <span class="tooltip-icon" tabindex="0">?</span>
+  <span class="tooltip-box">
+    The time slice given to each task in Round Robin. After this many time 
+    units, the CPU switches to the next task — even if the current one isn't done.
+  </span>
+</span></label>
       <div class="range-row">
         <input type="range" id="quantum" min="1" max="8" value="3" oninput="document.getElementById('qVal').textContent=this.value"/>
         <span class="range-val" id="qVal">3</span>
       </div>
     </div>
     <div class="control-group">
-      <label>Random Seed</label>
+      <label><span class="tooltip-wrap">
+  Random Seed
+  <span class="tooltip-icon" tabindex="0">?</span>
+  <span class="tooltip-box">
+    A number used to generate the same set of tasks every time. Same seed = 
+    same tasks = reproducible comparison between algorithms.
+  </span>
+</span></label>
       <input type="number" id="seed" value="42" min="1" max="9999"/>
     </div>
     <button class="run-btn" onclick="runAll()">▶ RUN SIMULATION</button>
@@ -68,7 +82,15 @@
       <div class="gantt-axis" id="axisEDF"></div>
     </div>
     <div class="gantt-wrap ea">
-      <div class="gantt-label">Energy-Aware EDF + DVFS</div>
+      <div class="gantt-label">Energy-Aware EDF + <span class="tooltip-wrap">
+  DVFS
+  <span class="tooltip-icon" tabindex="0">?</span>
+  <span class="tooltip-box">
+    <strong>Dynamic Voltage &amp; Frequency Scaling.</strong> The CPU lowers its 
+    clock speed (and voltage) when a task isn't urgent, saving power. It speeds 
+    back up when a deadline is close. Used in every modern smartphone chip.
+  </span>
+</span></div>
       <div class="gantt-track" id="ganttEA"></div>
       <div class="gantt-axis" id="axisEA"></div>
     </div>
@@ -97,15 +119,38 @@
       <div class="chart-wrap"><canvas id="chartEnergy"></canvas></div>
     </div>
     <div class="chart-card">
-      <div class="chart-card-title">Deadline Misses</div>
+      <div class="chart-card-title"><span class="tooltip-wrap">
+  Deadline Misses
+  <span class="tooltip-icon" tabindex="0">?</span>
+  <span class="tooltip-box">
+    A deadline miss happens when a task doesn't finish before its required 
+    completion time. In real systems (like airbags or audio), this causes 
+    failures. Fewer misses = more reliable scheduling.
+  </span>
+</span></div>
       <div class="chart-wrap"><canvas id="chartMisses"></canvas></div>
     </div>
     <div class="chart-card">
-      <div class="chart-card-title">Avg Turnaround Time</div>
+      <div class="chart-card-title"><span class="tooltip-wrap">
+  Avg Turnaround Time
+  <span class="tooltip-icon" tabindex="0">?</span>
+  <span class="tooltip-box">
+    Average time from when a task <em>arrives</em> to when it <em>finishes</em>. 
+    Includes waiting in the queue + actual execution time. Lower = tasks complete 
+    faster overall.
+  </span>
+</span></div>
       <div class="chart-wrap"><canvas id="chartTurnaround"></canvas></div>
     </div>
     <div class="chart-card">
-      <div class="chart-card-title">CPU Frequency Distribution (EA-EDF)</div>
+      <div class="chart-card-title"><span class="tooltip-wrap">
+  CPU Frequency Distribution (EA-EDF)
+  <span class="tooltip-icon" tabindex="0">?</span>
+  <span class="tooltip-box">
+    Shows how often the CPU ran at each of the 5 frequency levels during 
+    EA-EDF scheduling. More time at Ultra-Low / Low = more energy saved.
+  </span>
+</span></div>
       <div class="chart-wrap"><canvas id="chartFreq"></canvas></div>
     </div>
   </div>
@@ -119,7 +164,8 @@
           <tr>
             <th>ID</th><th>Arrival</th><th>Burst</th><th>Deadline</th><th>Priority</th>
             <th>RR Finish</th><th>EDF Finish</th><th>EA Finish</th>
-            <th>RR Energy</th><th>EA Energy</th>
+           <th><span class="tooltip-wrap">RR Energy<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-box below">Energy cost of this task under Round Robin. Calculated as frequency² × burst time.</span></span></th>
+           <th><span class="tooltip-wrap">EA Energy<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-box below">Energy cost under Energy-Aware EDF. Usually lower than RR Energy because DVFS runs the task at a reduced frequency.</span></span></th>
           </tr>
         </thead>
         <tbody id="taskTableBody"></tbody>
